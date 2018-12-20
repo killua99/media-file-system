@@ -92,14 +92,9 @@ class Media_File_System_Bootstrap {
 
 		require_once \dirname( __DIR__ ) . '/vendor/autoload.php';
 
-		\define( 'WC_TAX_ROUNDING_MODE', 'auto' );
-		\define( 'WC_USE_TRANSACTIONS', 'false' );
-		foreach ( $plugins_to_active as $plugin ) {
-			require_once $this->plugin_dir . '/plugins/' . $plugin;
-		}
+		require_once $this->plugin_dir . '/media-file-system.php';
 
 	}
-
 
 	/**
 	 * Access to the single instance of the class.

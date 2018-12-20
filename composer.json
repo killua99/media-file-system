@@ -47,7 +47,7 @@
         "install-phpunit": [
             "sudo mysql -u root -e \"DROP DATABASE IF EXISTS \\`wp_media_file_system_test\\`;\"",
             "WP_TESTS_DIR=/tmp/media_file_system_test",
-            "export WP_TESTS_DIR; bash tests/bin/install.sh 'wp_media_file_system_test' root $MYSQ_PASS localhost 4.9.9"
+            "export WP_TESTS_DIR; bash tests/bin/install.sh 'wp_media_file_system_test' root $MYSQL_PASS localhost 4.9.9"
         ],
         "unit": [
             "WP_TESTS_DIR=/tmp/media_file_system_test",
