@@ -71,9 +71,6 @@ class Media_File_System_Bootstrap {
 		// Load Plugins
 		tests_add_filter( 'muplugins_loaded', [ $this, 'load' ] );
 
-		// install Plugins
-		tests_add_filter( 'setup_theme', [ $this, 'install_plugins' ] );
-
 		// Start up the WP testing environment.
 		require_once $this->tests_dir . '/includes/bootstrap.php';
 
@@ -102,7 +99,7 @@ class Media_File_System_Bootstrap {
 	 * @return self
 	 */
 	public static function instance() : self {
-		if ( empty( self::$instance ) ) {
+		if ( null === self::$instance ) {
 			self::$instance = new self();
 		}
 
