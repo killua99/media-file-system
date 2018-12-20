@@ -1,0 +1,48 @@
+language: php
+
+sudo: false
+
+# Test main supported versions of PHP and HHVM against latest WP.
+php:
+  - 7.1
+  - 7.2
+  - 7.3
+
+env:
+  - WP_VERSION=latest WP_MULTISITE=0
+
+# Additional tests against stable PHP (min recommended version is 5.6) and past supported versions of WP.
+matrix:
+  fast_finish: true
+  include:
+    - name: "Unit test php 7.1 WP 4.9.9"
+      php: 7.1
+      env: WP_VERSION=4.9.9 WP_MULTISITE=0
+    - name: "Unit test php 7.2 WP 4.9.9"
+      php: 7.2
+      env: WP_VERSION=4.9.9 WP_MULTISITE=0
+    - name: "Unit test php 7.3 WP 4.9.9"
+      php: 7.3
+      env: WP_VERSION=4.9.9 WP_MULTISITE=0
+    - name: "Unit test php 7.1 WP latest"
+      php: 7.1
+    - name: "Unit test php 7.2 WP latest"
+      php: 7.2
+    - name: "Unit test php 7.3 WP latest"
+      php: 7.3
+
+before_script:
+  - composer i -o --prefer-dist
+  - export PATH="$HOME/.composer/vendor/bin:$PATH"
+  - bash tests/bin/install.sh media_file_system_test root '' localhost $WP_VERSION
+  - bash tests/bin/travis.sh before
+
+script:
+  - vendor/bin/phpunit
+
+branches:
+  only:
+    - master
+    - /^\d+\.\d+(\.\d+)?(-\S*)?$/
+    - /^feature\//
+    - /^bugfix\//

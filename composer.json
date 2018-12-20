@@ -1,0 +1,60 @@
+{
+    "name": "killua99/media-file-system",
+    "description": "WordPress plugin to enhance media file system",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0+",
+    "homepage": "https://github.com/killua99/media-file-system",
+    "authors": [
+        {
+            "name": "Luigi Guevara",
+            "email": "guevara.luigi@gmail.com"
+        }
+    ],
+    "support": {
+        "source": "https://github.com/killua99/media-file-system",
+        "issues": "https://github.com/killua99/media-file-system/issues"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": ">=7.1",
+        "composer/installers": "^1.6"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.5",
+        "stevegrunwell/wp-enforcer": "^0.5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Media_File_System\\": "includes"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Media_File_System_PhpUnit\\": "tests"
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "[ $COMPOSER_DEV_MODE -eq 0 ] || composer install-enforcer"
+        ],
+        "post-update-cmd": [
+            "[ $COMPOSER_DEV_MODE -eq 0 ] || composer install-enforcer"
+        ],
+        "install-enforcer": [
+            "wp-enforcer"
+        ],
+        "install-phpunit": [
+            "sudo mysql -u root -e \"DROP DATABASE IF EXISTS \\`wp_media_file_system_test\\`;\"",
+            "WP_TESTS_DIR=/tmp/media_file_system_test",
+            "export WP_TESTS_DIR; bash tests/bin/install.sh 'wp_media_file_system_test' root $MYSQ_PASS localhost 4.9.9"
+        ],
+        "unit": [
+            "WP_TESTS_DIR=/tmp/media_file_system_test",
+            "export WP_TESTS_DIR; phpunit --colors=always"
+        ],
+        "test": [
+            "@unit"
+        ]
+    }
+}
