@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  wp_phpunit:
+    image: "killua99/wordpress-phpunit:latest"
+    volumes:
+      - ".:/app"
+      - "testsuite:/tmp"
+  mysql_phpunit:
+    image: "mariadb:10.3.11"
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: "media_file_system_test"
+      MYSQL_ROOT_PASSWORD: ""
+
+volumes:
+  testsuite: {}

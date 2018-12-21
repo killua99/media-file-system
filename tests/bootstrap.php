@@ -58,7 +58,7 @@ class Media_File_System_Bootstrap {
 		$this->tests_dir = ! empty( getenv( 'WP_TESTS_DIR' ) ) ? getenv( 'WP_TESTS_DIR' ) : rtrim( sys_get_temp_dir(), '/\\' ) . '/wordpress-tests-lib';
 
 		if ( ! file_exists( $this->tests_dir . '/includes/functions.php' ) ) {
-			echo "Could not find $this->tests_dir/includes/functions.php, have you run bin/install.sh ?"; // WPCS: XSS ok.
+			echo "Could not find $this->tests_dir/includes/functions.php, have you run test/bin/install.sh ?"; // WPCS: XSS ok.
 			exit( 1 );
 		}
 
