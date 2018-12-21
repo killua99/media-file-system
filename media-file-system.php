@@ -24,7 +24,7 @@ define( 'MFS_FILE', __FILE__ );
 define( 'MFS_PLUGIN_PATH', __DIR__ );
 define( 'MFS_PLUGIN_URL', plugins_url( '/', MFS_FILE ) );
 
-if ( ! class_exists( \Media_File_System\Main::class ) ) {
+if ( ! class_exists( \Media_File_System\Main::class ) && is_file( __DIR__ . '/vendor/autoload.php' ) ) {
 	require_once __DIR__ . '/vendor/autoload.php';
 }
 
