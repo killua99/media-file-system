@@ -9,6 +9,7 @@ namespace Media_File_System;
 
 defined( 'ABSPATH' ) || die();
 
+use Media_File_System\Admin\Admin;
 use Media_File_System\Shared\BaseTrait;
 
 /**
@@ -25,6 +26,10 @@ class Main {
 	 */
 	public function __construct() {
 		add_action( 'plugins_loaded', [ $this, 'plugins_loaded' ] );
+
+		if ( is_admin() ) {
+			Admin::get_instance();
+		}
 	}
 
 	/**
