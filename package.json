@@ -2,7 +2,6 @@
   "name": "media-file-system",
   "version": "0.1.0",
   "description": "Enhancer File System",
-  "main": "index.js",
   "directories": {
     "test": "tests"
   },
