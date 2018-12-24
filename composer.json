@@ -45,21 +45,21 @@
         "install-enforcer": [
             "wp-enforcer"
         ],
+        "wp-install": [
+            "docker-compose run --rm wp-cli install-wp"
+        ],
         "docker": [
-            "docker-compose up -d"
+            "docker-compose up -d",
+            "sleep 4",
+            "@wp-install",
+            "docker-compose run --rm wp_phpunit /app/tests/bin/install.sh media_file_system_test root '' mysql_phpunit 4.9.9 true"
+
         ],
         "docker-down": [
             "docker-compose down --volumes"
         ],
-        "install-wp": [
-            "docker-compose run --rm wp-cli install-wp"
-        ],
-        "docker-prepareunit": [
-            "docker-compose -f docker-phpunit.yml up -d --remove-orphans",
-            "docker-compose -f docker-phpunit.yml run --rm wp_phpunit /app/tests/bin/install.sh media_file_system_test root '' mysql_phpunit 4.9.9 true"
-        ],
-        "docker-phpunit": [
-            "docker-compose -f docker-phpunit.yml run --rm wp_phpunit phpunit"
+        "docker-unit": [
+            "docker-compose run --rm wp_phpunit phpunit --colors=always"
         ],
         "install-phpunit": [
             "sudo mysql -u root -e \"DROP DATABASE IF EXISTS \\`wp_media_file_system_test\\`;\"",

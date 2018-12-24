@@ -1,0 +1,28 @@
+{
+  "name": "media-file-system",
+  "version": "0.1.0",
+  "description": "Enhancer File System",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/killua99/media-file-system.git"
+  },
+  "keywords": [
+    "wordpress",
+    "media",
+    "file",
+    "system"
+  ],
+  "author": "Luigi Guevara <guevara.luigi@gmail.com>",
+  "license": "GPL-2.0+",
+  "bugs": {
+    "url": "https://github.com/killua99/media-file-system/issues"
+  },
+  "homepage": "https://github.com/killua99/media-file-system#readme"
+}
