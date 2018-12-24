@@ -7,3 +7,5 @@
 
 # Ides thing
 .idea
+.DS_Store
+*-sublime.*
