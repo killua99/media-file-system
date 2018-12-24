@@ -23,5 +23,11 @@
   "bugs": {
     "url": "https://github.com/killua99/media-file-system/issues"
   },
-  "homepage": "https://github.com/killua99/media-file-system#readme"
+  "homepage": "https://github.com/killua99/media-file-system#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.4",
+    "babel-preset-es2016": "^6.24.1",
+    "webpack": "^4.28.2"
+  }
 }
