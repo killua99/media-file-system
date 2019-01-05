@@ -50,10 +50,9 @@
         ],
         "docker": [
             "docker-compose up -d",
-            "sleep 4",
+            "sleep 5",
             "@wp-install",
             "docker-compose run --rm wp_phpunit /app/tests/bin/install.sh media_file_system_test root '' mysql_phpunit 4.9.9 true"
-
         ],
         "docker-down": [
             "docker-compose down --volumes"
