@@ -73,6 +73,20 @@ class Admin {
 	public function admin_menu_rearrange() : void {
 		global $submenu;
 
+		$options_sorted = [];
+
+		$media_position             = array_search( __( 'Media' ), array_column( $submenu['options-general.php'], 0 ), true ); // phpcs:ignore
+		$media_file_system_position = array_search( esc_html__( 'File System', self::$text_domain ), array_column( $submenu['options-general.php'], 0 ), true ); // phpcs:ignore
+
+		$options_sorted     += array_slice( $submenu['options-general.php'], 0, $media_position, true );
+		$options_sorted[30] = $submenu['options-general.php'][30];
+		$options_sorted     += array_slice( $submenu['options-general.php'], $media_file_system_position, $media_file_system_position + 1, true );
+		$options_sorted     += array_slice( $submenu['options-general.php'], $media_position + 1, $media_file_system_position, true );
+		$options_sorted     += array_slice( $submenu['options-general.php'], $media_file_system_position + 2, true );
+
+		// Overriding WordPress Global is prohibited, not on my watch.
+		$submenu['options-general.php'] = $options_sorted; // phpcs:ignore
+
 	}
 
 	/**
