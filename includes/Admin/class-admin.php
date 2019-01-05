@@ -23,14 +23,20 @@ class Admin {
 	/** @var string Menu Slug. */
 	protected $menu_slug;
 
+	/** @var \Media_File_System\Admin\General_Form General Forms. */
+	protected $general_options;
+
 	/**
 	 * Admin constructor.
 	 */
 	public function __construct() {
+		$this->menu_slug = 'media-file-system';
+
+		add_action( 'admin_init', [ $this, 'admin_init' ] );
 		add_action( 'admin_menu', [ $this, 'admin_menu' ] );
 		add_action( 'admin_menu', [ $this, 'admin_menu_rearrange' ], 11 );
 		add_action( 'current_screen', [ $this, 'current_screen' ] );
-		$this->menu_slug = 'media-file-system';
+
 	}
 
 	/**
@@ -54,7 +60,14 @@ class Admin {
 	}
 
 	/**
-	 * Admin init
+	 * WordPress admin init.
+	 */
+	public function admin_init() {
+		$this->general_options = General_Form::get_instance();
+	}
+
+	/**
+	 * Admin menu.
 	 */
 	public function admin_menu() : void {
 		add_options_page(
@@ -90,9 +103,47 @@ class Admin {
 	}
 
 	/**
+	 * Easy way to print hide tabs.
+	 *
+	 * @param string $active_tab Current tab.
+	 * @param bool   $print Flag to print or hide nav bar.
+	 */
+	public function print_tabs( $active_tab, $print = true ) {
+
+		if ( ! $print ) {
+			return;
+		}
+
+		?>
+		<h2 class="nav-tab-wrapper">
+			<a href="?page=media-file-system&tab=general_options" class="nav-tab <?php echo 'general_options' === $active_tab ? esc_attr( 'nav-tab-active' ) : ''; ?>"><?php esc_html_e( 'General Options', self::$text_domain ); ?></a>
+			<a href="?page=media-file-system&tab=advance_options" class="nav-tab <?php echo 'styling_options' === $active_tab ? esc_attr( 'nav-tab-active' ) : ''; ?>"><?php esc_html_e( 'Advance Options', self::$text_domain ); ?></a>
+		</h2>
+		<?php
+	}
+
+	/**
 	 * Options screen.
 	 */
 	public function media_file_system_options() {
-		echo 'sss';
+
+		$active_tab = $_GET['tab'] ?? 'general_options'; // WPCS: csrf ok.
+
+		?>
+		<div class="wrap">
+			<h2><?php echo get_admin_page_title(); // WPCS: XSS ok. ?></h2>
+
+			<?php $this->print_tabs( $active_tab, false ); ?>
+
+			<form method="post" action="options.php">
+				<?php
+
+				$this->{$active_tab}->get_section();
+
+				submit_button();
+				?>
+			</form>
+		</div>
+		<?php
 	}
 }
