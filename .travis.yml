@@ -6,7 +6,6 @@ sudo: false
 php:
   - 7.1
   - 7.2
-  - 7.3
 
 env:
   - WP_VERSION=latest WP_MULTISITE=0
@@ -20,9 +19,6 @@ matrix:
       env: WP_VERSION=4.9.9 WP_MULTISITE=0
     - name: "Unit test php 7.2 WP 4.9.9"
       php: 7.2
-      env: WP_VERSION=4.9.9 WP_MULTISITE=0
-    - name: "Unit test php 7.3 WP 4.9.9"
-      php: 7.3
       env: WP_VERSION=4.9.9 WP_MULTISITE=0
 
 before_script:
