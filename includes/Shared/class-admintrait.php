@@ -19,6 +19,9 @@ trait AdminTrait {
 	/** @var string Option Group. */
 	protected $option_group = 'media_file_system_options';
 
+	/** @var string Option Name. */
+	protected $option_name = 'media_file_system';
+
 	/**
 	 * Callback section.
 	 */

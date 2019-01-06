@@ -9,6 +9,7 @@ namespace Media_File_System\Admin;
 
 defined( 'ABSPATH' ) || die();
 
+use Media_File_System\Shared\AdminTrait;
 use Media_File_System\Shared\BaseTrait;
 
 /**
@@ -19,6 +20,7 @@ use Media_File_System\Shared\BaseTrait;
 class Admin {
 
 	use BaseTrait;
+	use AdminTrait;
 
 	/** @var string Menu Slug. */
 	protected $menu_slug;
@@ -63,7 +65,11 @@ class Admin {
 	 * WordPress admin init.
 	 */
 	public function admin_init() {
+
+		register_setting( $this->option_group, $this->option_name );
+
 		$this->general_options = General_Form::get_instance();
+
 	}
 
 	/**
