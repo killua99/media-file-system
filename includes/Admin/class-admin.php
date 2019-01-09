@@ -58,7 +58,13 @@ class Admin {
 	 * Enqueue scripts needed.
 	 */
 	public function admin_enqueue_scripts() : void {
-
+		wp_enqueue_script(
+			'mfs-admin-script',
+			MFS_PLUGIN_URL . 'assets/js/admin-screen.js',
+			[],
+			MFS_VERSION,
+			true
+		);
 	}
 
 	/**
@@ -94,7 +100,7 @@ class Admin {
 
 		$options_sorted = [];
 
-		$media_position             = array_search( __( 'Media' ), array_column( $submenu['options-general.php'], 0 ), true ); // phpcs:ignore
+		$media_position             = array_search( 'options-media.php', array_column( $submenu['options-general.php'], 2 ), true ); // phpcs:ignore
 		$media_file_system_position = array_search( esc_html__( 'File System', self::$text_domain ), array_column( $submenu['options-general.php'], 0 ), true ); // phpcs:ignore
 
 		$options_sorted     += array_slice( $submenu['options-general.php'], 0, $media_position, true );

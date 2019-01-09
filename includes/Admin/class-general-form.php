@@ -39,6 +39,17 @@ class General_Form {
 
 		add_settings_section( self::SECTION_OPTION_ID, esc_html__( 'General Options', self::$text_domain ), [ $this, 'general_settings_section' ], $this->section_page ); // phpcs:ignore
 
+		$post_type = get_post_types( [ 'name' => 'attachment' ], 'object' )['attachment'];
+
+		$post_type_property = new Post_Type_Property( $post_type );
+		add_settings_field(
+			'post_type-' . $post_type->name,
+			esc_html__( $post_type->label . ' default property', self::$text_domain ), // phpcs:ignore
+			[ $post_type_property, 'print_field' ],
+			$this->section_page,
+			self::SECTION_OPTION_ID
+		);
+
 		add_settings_field( 'post_types', esc_html__( 'Posts types', self::$text_domain ), [ $this, 'post_types_field' ], $this->section_page, self::SECTION_OPTION_ID ); // phpcs:ignore
 
 		if ( isset( $this->options['post_type'] ) && count( $this->options['post_type'] ) ) {
