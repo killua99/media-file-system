@@ -38,6 +38,7 @@ class Admin {
 		add_action( 'admin_menu', [ $this, 'admin_menu' ] );
 		add_action( 'admin_menu', [ $this, 'admin_menu_rearrange' ], 11 );
 		add_action( 'current_screen', [ $this, 'current_screen' ] );
+		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
 
 	}
 
@@ -55,16 +56,23 @@ class Admin {
 	}
 
 	/**
-	 * Enqueue scripts needed.
+	 * Enqueue scripts.
+	 *
+	 * @param string $hook WordPress hook.
 	 */
-	public function admin_enqueue_scripts() : void {
-		wp_enqueue_script(
-			'mfs-admin-script',
-			MFS_PLUGIN_URL . 'assets/js/admin-screen.js',
-			[],
-			MFS_VERSION,
-			true
-		);
+	public function admin_enqueue_scripts( $hook ) {
+
+		if ( 'settings_page_media-file-system' === $hook ) {
+			wp_enqueue_script(
+				'mfs-admin-script',
+				MFS_PLUGIN_URL . '/assets/js/admin-screen.js',
+				[],
+				MFS_VERSION,
+				true
+			);
+		}
+
+		wp_enqueue_style( 'mfs-admin-style', MFS_PLUGIN_URL . '/assets/css/mfs-admin-style.css', [], MFS_VERSION );
 	}
 
 	/**
@@ -103,11 +111,15 @@ class Admin {
 		$media_position             = array_search( 'options-media.php', array_column( $submenu['options-general.php'], 2 ), true ); // phpcs:ignore
 		$media_file_system_position = array_search( esc_html__( 'File System', self::$text_domain ), array_column( $submenu['options-general.php'], 0 ), true ); // phpcs:ignore
 
-		$options_sorted     += array_slice( $submenu['options-general.php'], 0, $media_position, true );
+		$media_file_system_menu            = array_slice( $submenu['options-general.php'], $media_file_system_position, $media_file_system_position + 1, true );
+		$key                               = key( $media_file_system_menu );
+		$media_file_system_menu[ $key ][4] = 'mfs-item';
+
+		$options_sorted    += array_slice( $submenu['options-general.php'], 0, $media_position, true );
 		$options_sorted[30] = $submenu['options-general.php'][30];
-		$options_sorted     += array_slice( $submenu['options-general.php'], $media_file_system_position, $media_file_system_position + 1, true );
-		$options_sorted     += array_slice( $submenu['options-general.php'], $media_position + 1, $media_file_system_position, true );
-		$options_sorted     += array_slice( $submenu['options-general.php'], $media_file_system_position + 2, true );
+		$options_sorted    += $media_file_system_menu;
+		$options_sorted    += array_slice( $submenu['options-general.php'], $media_position + 1, $media_file_system_position, true );
+		$options_sorted    += array_slice( $submenu['options-general.php'], $media_file_system_position + 2, true );
 
 		// Overriding WordPress Global is prohibited, not on my watch.
 		$submenu['options-general.php'] = $options_sorted; // phpcs:ignore

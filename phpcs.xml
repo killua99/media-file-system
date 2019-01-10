@@ -20,13 +20,17 @@
 	</rule>
 
 	<rule ref="WordPress-Extra">
-		<exclude name="Generic.Commenting.DocComment.ContentAfterOpen"/>
-		<exclude name="Generic.Commenting.DocComment.MissingShor"/>
-		<exclude name="Generic.Commenting.DocComment.SpacingBetween"/>
-		<exclude name="Generic.Commenting.DocComment.SpacingBeforeTags"/>
+		<exclude name="Generic.Commenting.DocComment.ContentAfterOpen" />
+		<exclude name="Generic.Commenting.DocComment.MissingShort" />
+		<exclude name="Generic.Commenting.DocComment.SpacingBetween" />
+		<exclude name="Generic.Commenting.DocComment.SpacingBeforeTags" />
+		<exclude name="WordPress.WP.I18n.NonSingularStringLiteralText" />
+		<exclude name="WordPress.WP.I18n.NonSingularStringLiteralDomain" />
 	</rule>
 	<rule ref="WordPress-Docs">
-		<exclude name="Generic.Commenting.DocComment.MissingShort"/>
+		<exclude name="WordPress.WP.I18n.NonSingularStringLiteralText" />
+		<exclude name="WordPress.WP.I18n.NonSingularStringLiteralDomain" />
+		<exclude name="Generic.Commenting.DocComment.MissingShort" />
 	</rule>
 
 </ruleset>
