@@ -65,7 +65,7 @@ class Admin {
 		if ( 'settings_page_media-file-system' === $hook ) {
 			wp_enqueue_script(
 				'mfs-admin-script',
-				MFS_PLUGIN_URL . '/assets/js/admin-screen.js',
+				MFS_PLUGIN_URL . '/assets/js/mfs-admin-script.js',
 				[],
 				MFS_VERSION,
 				true

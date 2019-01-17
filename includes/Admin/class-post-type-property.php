@@ -56,12 +56,13 @@ class Post_Type_Property {
 			$blog_prefix = '/blog';
 		}
 
-		$public_path = $this->options[ $this->post_type->name ]['public_path'] ?? '/%year%/%month%';
+		$public_path = $this->options[ $this->post_type->name ]['public_path'] ?? '/{year}/{month}';
 
 		$upload_dir = wp_upload_dir();
 		?>
 		<p><?php esc_html_e( 'Public file system path', self::$text_domain ); // phpcs:ignore ?></p>
-		<code><?php echo $upload_dir['baseurl']; ?></code><input name="<?php echo esc_attr( $base_name ); ?>[public_path]" id="<?php echo esc_attr( $base_name ); ?>[public_path]" value="<?php echo esc_attr( $public_path ); ?>" placeholder="<?php esc_html_e( 'Public path from publics folder', self::$text_domain ); // phpcs:ignore ?>" class="regular-text code">
+		<code><?php echo $upload_dir['baseurl']; ?></code>
+		<input name="<?php echo esc_attr( $base_name ); ?>[public_path]" id="<?php echo esc_attr( $base_name ); ?>[public_path]" value="<?php echo esc_attr( $public_path ); ?>" placeholder="<?php esc_html_e( 'Public path from publics folder', self::$text_domain ); // phpcs:ignore ?>" class="regular-text code">
 		<?php
 
 		$this->print_tags();
@@ -76,26 +77,27 @@ class Post_Type_Property {
 			<div id="custom_selection_updated-<?php echo esc_attr( $this->post_type->name ); ?>" aria-live="assertive" class="screen-reader-text"></div>
 			<?php
 			$available_tags = [
-				/* translators: %s: permalink structure tag */
+				// translators: %s: path structure tag.
 				'custom_date:Y-m-d' => __( '%s (Custom date base on PHP date.)' ),
+				// translators: %s: path structure tag.
 				'year'              => __( '%s (The year of the post, four digits, for example 2004.)' ),
-				/* translators: %s: permalink structure tag */
-				'monthnum'          => __( '%s (Month of the year, for example 05.)' ),
-				/* translators: %s: permalink structure tag */
+				// translators: %s: path structure tag.
+				'month'          => __( '%s (Month of the year, for example 05.)' ),
+				// translators: %s: path structure tag.
 				'day'               => __( '%s (Day of the month, for example 28.)' ),
-				/* translators: %s: permalink structure tag */
+				// translators: %s: path structure tag.
 				'hour'              => __( '%s (Hour of the day, for example 15.)' ),
-				/* translators: %s: permalink structure tag */
+				// translators: %s: path structure tag.
 				'minute'            => __( '%s (Minute of the hour, for example 43.)' ),
-				/* translators: %s: permalink structure tag */
+				// translators: %s: path structure tag.
 				'second'            => __( '%s (Second of the minute, for example 33.)' ),
-				/* translators: %s: permalink structure tag */
+				// translators: %s: path structure tag.
 				'post_id'           => __( '%s (The unique ID of the post, for example 423.)' ),
-				/* translators: %s: permalink structure tag */
+				// translators: %s: path structure tag.
 				'postname'          => __( '%s (The sanitized post title (slug).)' ),
-				/* translators: %s: permalink structure tag */
+				// translators: %s: path structure tag.
 				'category'          => __( '%s (Category slug. Nested sub-categories appear as nested directories in the URL.)' ),
-				/* translators: %s: permalink structure tag */
+				// translators: %s: path structure tag.
 				'author'            => __( '%s (A sanitized version of the author name.)' ),
 			];
 
@@ -124,6 +126,7 @@ class Post_Type_Property {
 						<li style="display: inline-block">
 							<button type="button"
 								class="button button-secondary"
+								title="<?php echo esc_attr( sprintf( $explanation, $tag ) ); ?>"
 								aria-label="<?php echo esc_attr( sprintf( $explanation, $tag ) ); ?>"
 								data-added="<?php echo esc_attr( sprintf( $structure_tag_added, $tag ) ); ?>"
 								data-used="<?php echo esc_attr( sprintf( $structure_tag_already_used, $tag ) ); ?>"
