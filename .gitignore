@@ -1,7 +1,8 @@
 
 # Vendor folders
-/node_modules/
-/vendor/
+/assets
+/node_modules
+/vendor
 
 # Ides thing
 .idea
