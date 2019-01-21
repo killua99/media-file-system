@@ -61,17 +61,21 @@ class Post_Type_Property {
 		$upload_dir = wp_upload_dir();
 		?>
 		<p><?php esc_html_e( 'Public file system path', self::$text_domain ); // phpcs:ignore ?></p>
-		<code><?php echo $upload_dir['baseurl']; ?></code>
+		<code><?php echo esc_attr( $upload_dir['baseurl'] ); ?></code>
 		<input name="<?php echo esc_attr( $base_name ); ?>[public_path]" id="<?php echo esc_attr( $base_name ); ?>[public_path]" value="<?php echo esc_attr( $public_path ); ?>" placeholder="<?php esc_html_e( 'Public path from publics folder', self::$text_domain ); // phpcs:ignore ?>" class="regular-text code">
 		<?php
 
-		$this->print_tags();
+		$this->print_tags( $base_name . '[public_path]' );
 	}
 
 	/**
 	 * From core section.
+	 *
+	 * @param string $base_name Works as ID selector.
+	 *
+	 * @TODO: Please check the code twice before releasing it.
 	 */
-	public function print_tags() : void {
+	public function print_tags( $base_name ) : void {
 		?>
 		<div class="available-structure-tags-<?php echo esc_attr( $this->post_type->name ); ?> hide-if-no-js">
 			<div id="custom_selection_updated-<?php echo esc_attr( $this->post_type->name ); ?>" aria-live="assertive" class="screen-reader-text"></div>
@@ -82,7 +86,7 @@ class Post_Type_Property {
 				// translators: %s: path structure tag.
 				'year'              => __( '%s (The year of the post, four digits, for example 2004.)' ),
 				// translators: %s: path structure tag.
-				'month'          => __( '%s (Month of the year, for example 05.)' ),
+				'month'             => __( '%s (Month of the year, for example 05.)' ),
 				// translators: %s: path structure tag.
 				'day'               => __( '%s (Day of the month, for example 28.)' ),
 				// translators: %s: path structure tag.
@@ -119,7 +123,7 @@ class Post_Type_Property {
 			if ( ! empty( $available_tags ) ) :
 				?>
 				<p><?php esc_html_e( 'Available tags:', self::$text_domain ); ?></p>
-				<ul role="list">
+				<ul class="tag-list" role="list" data-selector="<?php echo esc_attr( $base_name ); ?>">
 					<?php
 					foreach ( $available_tags as $tag => $explanation ) {
 						?>
@@ -130,6 +134,7 @@ class Post_Type_Property {
 								aria-label="<?php echo esc_attr( sprintf( $explanation, $tag ) ); ?>"
 								data-added="<?php echo esc_attr( sprintf( $structure_tag_added, $tag ) ); ?>"
 								data-used="<?php echo esc_attr( sprintf( $structure_tag_already_used, $tag ) ); ?>"
+								data-value="<?php echo esc_attr( '{' . $tag . '}' ); ?>"
 								data-field="media_file_system[<?php echo esc_attr( $this->post_type->name ); ?>][public_path]">
 								<?php echo esc_attr( '{' . $tag . '}' ); ?>
 							</button>
