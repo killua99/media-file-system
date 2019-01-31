@@ -2,9 +2,7 @@
  * Contains Admin Script.
  */
 
-'user strict'
-
-let admin = {
+const admin = {
 	init () {
 		let listButtons = document.querySelectorAll( '.tag-list li button' )
 

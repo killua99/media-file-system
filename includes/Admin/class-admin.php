@@ -34,12 +34,23 @@ class Admin {
 	public function __construct() {
 		$this->menu_slug = 'media-file-system';
 
+		if ( is_multisite() && is_main_network() ) {
+			$this->add_actions();
+		} else {
+			$this->add_actions();
+		}
+
+	}
+
+	/**
+	 * A DRY method.
+	 */
+	protected function add_actions() : void {
 		add_action( 'admin_init', [ $this, 'admin_init' ] );
 		add_action( 'admin_menu', [ $this, 'admin_menu' ] );
 		add_action( 'admin_menu', [ $this, 'admin_menu_rearrange' ], 11 );
 		add_action( 'current_screen', [ $this, 'current_screen' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
-
 	}
 
 	/**
@@ -60,7 +71,7 @@ class Admin {
 	 *
 	 * @param string $hook WordPress hook.
 	 */
-	public function admin_enqueue_scripts( $hook ) {
+	public function admin_enqueue_scripts( $hook ) : void {
 
 		if ( 'settings_page_media-file-system' === $hook ) {
 			wp_enqueue_script(
@@ -115,11 +126,11 @@ class Admin {
 		$key                               = key( $media_file_system_menu );
 		$media_file_system_menu[ $key ][4] = 'mfs-item';
 
-		$options_sorted    += array_slice( $submenu['options-general.php'], 0, $media_position, true );
+		$options_sorted     += array_slice( $submenu['options-general.php'], 0, $media_position, true );
 		$options_sorted[30] = $submenu['options-general.php'][30];
-		$options_sorted    += $media_file_system_menu;
-		$options_sorted    += array_slice( $submenu['options-general.php'], $media_position + 1, $media_file_system_position, true );
-		$options_sorted    += array_slice( $submenu['options-general.php'], $media_file_system_position + 2, true );
+		$options_sorted     += $media_file_system_menu;
+		$options_sorted     += array_slice( $submenu['options-general.php'], $media_position + 1, $media_file_system_position, true );
+		$options_sorted     += array_slice( $submenu['options-general.php'], $media_file_system_position + 2, true );
 
 		// Overriding WordPress Global is prohibited, not on my watch.
 		$submenu['options-general.php'] = $options_sorted; // phpcs:ignore
@@ -132,7 +143,7 @@ class Admin {
 	 * @param string $active_tab Current tab.
 	 * @param bool   $print Flag to print or hide nav bar.
 	 */
-	public function print_tabs( $active_tab, $print = true ) {
+	public function print_tabs( $active_tab, $print = true ) : void {
 
 		if ( ! $print ) {
 			return;
@@ -149,7 +160,7 @@ class Admin {
 	/**
 	 * Options screen.
 	 */
-	public function media_file_system_options() {
+	public function media_file_system_options() : void {
 
 		$active_tab = $_GET['tab'] ?? 'general_options'; // WPCS: csrf ok.
 

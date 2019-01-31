@@ -27,10 +27,16 @@
 	"homepage": "https://github.com/killua99/media-file-system#readme",
 	"devDependencies": {
 		"babel-core": "^6.26.3",
+		"babel-eslint": "^10.0.1",
 		"babel-loader": "^7.0",
 		"babel-preset-env": "^1.7.0",
 		"babel-preset-es2016": "^6.24.1",
 		"cross-env": "^5.2.0",
+		"eslint": "^5.12.1",
+		"eslint-config-wpcalypso": "^4.0.1",
+		"eslint-loader": "^2.1.1",
+		"eslint-plugin-import": "^2.16.0",
+		"eslint-plugin-wpcalypso": "^4.0.2",
 		"webpack": "^4.28.2",
 		"webpack-cli": "^3.2.1"
 	}
